@@ -11,6 +11,7 @@ import com.crio.codingame.exceptions.QuestionNotFoundException;
 import com.crio.codingame.exceptions.UserNotFoundException;
 
 public interface IContestService {
+    // public Contest create(String contestName, Level level, String contestCreator) throws UserNotFoundException, QuestionNotFoundException;
     public Contest create(String contestName, Level level, String contestCreator, Integer numQuestion) throws UserNotFoundException, QuestionNotFoundException;
     public List<Contest> getAllContestLevelWise(Level level);
     public ContestSummaryDto runContest(String contestId, String contestCreator) throws ContestNotFoundException, InvalidContestException;

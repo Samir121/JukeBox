@@ -28,17 +28,25 @@ public class ContestService implements IContestService {
     private final IUserService userService;
 
     public ContestService(IContestRepository contestRepository, IQuestionRepository questionRepository,
-            IUserRepository userRepository, IUserService userService) {
+        IUserRepository userRepository, IUserService userService) {
         this.contestRepository = contestRepository;
         this.questionRepository = questionRepository;
         this.userRepository = userRepository;
         this.userService = userService;
     }
 
+    
+
+
     @Override
     public Contest create(String contestName, Level level, String contestCreator, Integer numQuestion) throws UserNotFoundException, QuestionNotFoundException {
         final User user = userRepository.findByName(contestCreator).orElseThrow(() -> new UserNotFoundException("Cannot Create Contest. Contest Creator for given name: " + contestCreator + " not found!"));
         final List<Question> questions = questionRepository.findAllQuestionLevelWise(level);
+        // questions.add(new Question("4", "title4", Level.LOW,10));
+        // System.out.println(questions);
+        if(contestCreator == null){
+            throw new UserNotFoundException("Contest Creator for given name: creator not found!");
+        }
         if(questions.isEmpty()){
             throw new QuestionNotFoundException("Cannot create Contest. Enough number of questions can not found. Please try again later!");
         }
@@ -62,6 +70,8 @@ public class ContestService implements IContestService {
         for(int i=0;i<numQuestion;i++){
             int randomIndex = rndm.nextInt(questions.size());
             questionList.add(questions.get(randomIndex));
+            if(!questionList.add(questions.get(randomIndex)))
+                i--;
         }
         return questionList;
     //  return Collections.emptyList();
@@ -140,5 +150,6 @@ public class ContestService implements IContestService {
         final Integer newScore = currentScore + calculatedScore - scoreWeight;
         return new User(user.getId(),user.getName(),newScore,user.getContests());
     }
+
     
 }

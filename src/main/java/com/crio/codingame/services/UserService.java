@@ -64,7 +64,7 @@ public class UserService implements IUserService {
             throw new InvalidOperationException("Cannot Attend Contest. Contest for given id:"+contestId+" is ended!");
         }
         if(user.checkIfContestExists(contest)){
-            throw new InvalidOperationException("Cannot Attend Contest. Contest for given id:  "+contestId+" is already registered!");
+            throw new InvalidOperationException("Cannot Attend Contest. Contest for given id:"+contestId+" is already registered!");
         }
         user.addContest(contest);
         userRepository.save(user);
