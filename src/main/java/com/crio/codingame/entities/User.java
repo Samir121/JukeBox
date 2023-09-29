@@ -33,6 +33,8 @@ public class User extends BaseEntity {
         this.contests = new ArrayList<Contest>();
     }
 
+    public User(Integer autoIncrement, String name2) {}
+
     public String getName() {
         return name;
     }
